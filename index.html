@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jujutsu TV - Streaming Particular</title>
+    <style>
+        /* Estilo Dark e Moderno inspirado na Netflix */
+        body {
+            background-color: #09090e;
+            color: #ffffff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #6366f1;
+            text-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+            margin-bottom: 25px;
+            font-size: 2.5rem;
+        }
+        .main-container {
+            width: 100%;
+            max-width: 900px;
+            background: #11111b;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 1px solid #1e1e2f;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+            background-color: #000;
+            outline: none;
+        }
+        h2 {
+            margin-top: 25px;
+            font-size: 1.3rem;
+            color: #a5b4fc;
+            border-bottom: 2px solid #1e1e2f;
+            padding-bottom: 8px;
+        }
+        .playlist {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+        }
+        .btn-ep {
+            background: #1e1e2f;
+            border: 2px solid #2d2d44;
+            color: #e2e8f0;
+            padding: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+        .btn-ep:hover {
+            background: #4f46e5;
+            border-color: #818cf8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+        .loading {
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>JUJUTSU TV</h1>
+
+    <div class="main-container">
+        <!-- O Player de Vídeo Nativo (O VLC do Navegador) -->
+        <video id="main-player" controls autoplay name="media">
+            <source id="video-source" src="" type="video/mp4">
+            Seu navegador não suporta a tag de vídeo.
+        </video>
+
+        <h2>Lista de Episódios</h2>
+        <!-- O JavaScript vai injetar os botões automaticamente aqui dentro -->
+        <div class="playlist" id="playlist-container">
+            <p class="loading">Carregando episódios da lista IPTV...</p>
+        </div>
+    </div>
+
+    <script>
+	// 1. GRADE DE EPISÓDIOS (Sempre que tiver um novo, adiciona aqui embaixo)
+const listaEpisodios = [
+    {
+        nome: "Jujutsu Kaisen - S01E01",
+        url: "https://video-ams2-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQMkhAoXK8occSAPm0tKERR7y7gJgXYpj3qlnx1hI_D64AjfKHNnZ69YzJpaXMd33hKSXisyw3hhTtXrhvqHL_5FYLSrhATXImz4NeL-LF0B7w.mp4?_nc_cat=107&_nc_sid=5e9851&_nc_ht=video-ams2-1.xx.fbcdn.net&_nc_ohc=Uf-d09fiEXwQ7kNvwErX-ZR&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuMTI4MC5kYXNoX2gyNjQtYmFzaWMtZ2VuMl83MjBwIiwieHB2X2Fzc2V0X2lkIjoxMDUyMzA1ODEyNzE5NDA1LCJhc3NldF9hZ2VfZGF5cyI6MjEwMSwidmlfdXNlY2FzZV9pZCI6MTAxMjIsImR1cmF0aW9uX3MiOjE0MzUsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=834905ba383091ab&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9DQTQzQkMzRUVCMEFCNzAyMjA1ODQ1RUI5NjRBMDRBQV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfZXBoZW1lcmFsLzFCNERFNjNEMzg5MzNEMzE3OTM3NTdDN0QxNTdFREFCX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbanMyiocTeAxUCKAJDMywXQJZrZ2yLQ5YYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZZSeAQA&_nc_gid=D927cZPHbFRUwBGufLgaJw&_nc_ss=7b24d&_nc_zt=28&oh=00_AQNIXiWiSQWlB6Idc2Z7S-R4-fJgB8h9vQTnG8rQdwfVMw&oe=6AD16395&bitrate=752664&tag=dash_h264-basic-gen2_720p&dl=1"
+    },
+    {
+        nome: "Jujutsu Kaisen - S01E02",
+        url: "https://video-ams2-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPKoFveQxf2MU9-ODZchWDgr4XrZDSrkapDis56Nwmd5DEoPaFvxzdxyGn4uMyH25Hzcq8J2SMcXIlUFxAkHsYF2nWXr0mAqErWPn2uNlfDlw.mp4?_nc_cat=106&_nc_sid=5e9851&_nc_ht=video-ams2-1.xx.fbcdn.net&_nc_ohc=75d2s8Myd1gQ7kNvwEh6eIO&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuMTI4MC5kYXNoX2gyNjQtYmFzaWMtZ2VuMl83MjBwIiwieHB2X2Fzc2V0X2lkIjo0NDg5MjA3MDA4ODE2NDYsImFzc2V0X2FnZV9kYXlzIjo4OTIsInZpX3VzZWNhc2VfaWQiOjEwMTIyLCJkdXJhdGlvbl9zIjoxNDM0LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=26fe9b788ba5f417&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9DQjRGMjdFMzEwQTU1RkIzODhCOTU1MzMwRjRCQ0U5QV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhg1ZmJfcGVybWFuZW50LzE2NDU2NjA3NDYyNDYzMzlfMTUzMTI1OTQ5NjczNTg0NjM2Mi5tcDQVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm3KvE7s-SzAEVAigCQzMsF0CWbAxJul41GBlkYXNoX2gyNjQtYmFzaWMtZ2VuMl83MjBwEQB1AmWUngEA&_nc_gid=j_A-erutxo00dYrwa8D0fQ&_nc_ss=7b24d&_nc_zt=28&oh=00_AQM67FOoxUCxayAZQX2ym4cxtuv88eF6jB1fwR2z_wFNZA&oe=6AD17AAA&bitrate=848959&tag=dash_h264-basic-gen2_720p&dl=1"
+    }
+];
+
+// 2. MOTOR DO SITE (Não precisa mexer em nada aqui, ele faz tudo sozinho)
+function carregarPlaylist() {
+    const containerBotoes = document.querySelector('.playlist') || document.getElementById('botoes-ep');
+    if (!containerBotoes) return;
+    
+    containerBotoes.innerHTML = ''; // Limpa o container
+
+    // Roda um loop na lista e cria um botão roxo para cada episódio automático
+    listaEpisodios.forEach((ep, index) => {
+        const botao = document.createElement('div');
+        botao.className = 'btn-ep'; // Usa a sua classe CSS de estilização
+        botao.innerText = ep.nome;
+        
+        // Quando o usuário clicar, chama a função de dar o play passando o link correto
+        botao.onclick = function() {
+            mudarVideo(ep.url, ep.nome);
+        };
+
+        containerBotoes.appendChild(botao);
+    });
+}
+
+function mudarVideo(url, nome) {
+    const videoElement = document.querySelector('video');
+    const sourceElement = videoElement.querySelector('source') || document.getElementById('video-src');
+
+    sourceElement.src = url;
+    videoElement.load(); // Força o navegador a carregar o novo vídeo
+    videoElement.play(); // Dá o play
+    console.log("Tocando agora: " + nome);
+}
+
+// Inicializa a grade de botões assim que a página abrir
+window.onload = carregarPlaylist;
+
+    </script>
+</body>
+</html>
